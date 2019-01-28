@@ -1,10 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
-//import 'package:vast_shop/event/event.dart';
-//import 'package:vast_shop/http/api.dart';
-//import 'package:vast_shop/values/strings.dart';
+import 'package:wanandroid/http/api.dart';
 
 const METHOD_GET = 'GET';
 const METHOD_POST = 'POST';
@@ -118,8 +115,7 @@ class HttpClient {
   /// headers, timeout time, base url,...
   Future<Options> _buildDefaultOptions() async {
     return Options(
-//        baseUrl: Api.SHOP_HOST,
-        baseUrl:'',
+        baseUrl: Api.WAN_HOST,
         connectTimeout: CONNECTION_TIMEOUT,
         receiveTimeout: RECEIVE_TIMEOUT,
         headers: await _getDefaultHeaders());
