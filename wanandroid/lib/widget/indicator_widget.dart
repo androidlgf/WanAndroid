@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:wanandroid/utils/object_util.dart';
 
 List<T> map<T>(List list, Function handler) {
   List<T> result = [];
@@ -34,7 +35,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
+    return !ObjectUtil.isEmptyList(images)?Stack(children: [
       CarouselSlider(
         viewportFraction: 1.0,
         items: images.map((imageUrl) {
@@ -77,6 +78,6 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
               );
             }),
           ))
-    ]);
+    ]):Container();
   }
 }
