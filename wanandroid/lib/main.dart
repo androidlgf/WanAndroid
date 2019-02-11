@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroid/widget/slider_widget.dart';
 import 'package:wanandroid/widget/indicator_widget.dart';
+import 'package:wanandroid/home/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,11 +31,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Column(
-        children: <Widget>[
-          new CarouselWithIndicator(imgList
-          )
-        ],
+      home: Container(
+        child: HomeState(),
       ),
     );
   }
