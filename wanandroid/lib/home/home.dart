@@ -14,13 +14,11 @@ class HomeState extends StatefulWidget {
 
 class _HomeState extends State<HomeState> {
   CarouselWithIndicator indicator;
-  List<String> banners;
   @override
   void initState() {
     super.initState();
     _getBanner().then((banners){
      this.setState(() {
-//       this.banners=banners;
        indicator=new CarouselWithIndicator(banners);
      });
    });
@@ -34,10 +32,9 @@ class _HomeState extends State<HomeState> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    print('====build='+indicator.toString());
     return Column(
       children: <Widget>[
-        indicator,
+        indicator!=null?indicator:Container(),
       ],
     );
   }
