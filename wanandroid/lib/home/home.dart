@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wanandroid/http/http_client.dart';
 import 'package:wanandroid/http/api.dart';
 import 'package:wanandroid/widget/indicator_widget.dart';
+import 'package:wanandroid/modal/serializable_banner_object.dart';
 import 'dart:convert';
 
 class HomeState extends StatefulWidget {
@@ -42,10 +43,10 @@ class _HomeState extends State<HomeState> {
 Future<List<String>> _getBanner() async{
    List<String> bean=[];
    await HttpClient().get(Api.WAN_BANNER).then((response) {
-       final dynamicListOfStrings=json.decode(response.toString());
-       List dataList=List.from(dynamicListOfStrings['data']);
-       for(int i=0;i<dataList.length;i++){
-         bean.add(dataList[i]['imagePath'].toString());
+      SerializableBannerObject bannerObject=SerializableBannerObject.fromJson(json.decode(response.toString()));
+      List<SerializableBannerDataObject> bannerDatas=bannerObject.data;
+       for(int i=0;i<bannerDatas.length;i++){
+         bean.add(bannerDatas[i].imagePath);
        }
    });
    return  bean;
