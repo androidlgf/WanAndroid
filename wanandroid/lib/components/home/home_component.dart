@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 class HomeComponent extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _HomeComponentState();
   }
 }
@@ -11,9 +11,10 @@ class HomeComponent extends StatefulWidget {
 class _HomeComponentState extends State<HomeComponent> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Container(
-      color: Colors.red,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
     );
   }
 }
