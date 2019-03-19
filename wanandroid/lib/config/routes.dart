@@ -12,6 +12,7 @@ import 'package:wanandroid/config/route_handlers.dart';
 
 class Routes {
   static String root = '/';
+  static String doHome = '/home';
 
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(
@@ -19,5 +20,6 @@ class Routes {
       print("ROUTE WAS NOT FOUND !!!");
     });
     router.define(root, handler: rootHandler);
+    router.define(doHome, handler: homeHandler);
   }
 }

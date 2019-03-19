@@ -44,18 +44,30 @@ class _AppComponentState extends State<AppComponent> {
             alignment: Alignment.topRight,
             child: Container(
               padding: const EdgeInsets.only(top: 30.0, right: 20.0),
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  CircleProgressBar(
-                    duration: 10000,
-                    radius: 20.0,
-                  ),
-                  Text(
-                    welcome_skip_text,
-                    style: new TextStyle(color: Colors.blue, fontSize: 12.0),
-                  )
-                ],
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      Routes.doHome, (Route<dynamic> route) => false);
+                },
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    CircleProgressBar(
+                      duration: 10000,
+                      radius: 20.0,
+                      progressChanged: (value) {
+                        if (value >= 1.0) {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              Routes.doHome, (Route<dynamic> route) => false);
+                        }
+                      },
+                    ),
+                    Text(
+                      welcome_skip_text,
+                      style: new TextStyle(color: Colors.blue, fontSize: 12.0),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
