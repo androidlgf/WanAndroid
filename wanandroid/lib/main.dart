@@ -36,6 +36,10 @@ class _WanAndroidState extends State<WanAndroidWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Color.fromRGBO(18, 18, 18, 1),
+      ),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: Application.router.generator,
     );

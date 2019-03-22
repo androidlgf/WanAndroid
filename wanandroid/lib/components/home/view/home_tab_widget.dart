@@ -63,14 +63,14 @@ class _HomeTabWidgetState extends State<HomeTabWidget>
     return Column(
       children: <Widget>[
         Container(
-            color: new Color(0xfff4f5f6),
+            color: Color.fromRGBO(18, 18, 18, 1),
             height: 38.0,
             child: TabBar(
               isScrollable: true,
               //是否可以滚动
               controller: tabController,
-              labelColor: Colors.red,
-              unselectedLabelColor: Color(0xff666666),
+              labelColor: Colors.white,
+              unselectedLabelColor: Color.fromRGBO(160, 160, 160, 1),
               labelStyle: TextStyle(fontSize: 16.0),
               tabs: tabs.map((Tab tab) {
                 return tab;
