@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:wanandroid/components/home/view/home_tab_widget.dart';
-
+import 'package:wanandroid/widget/async_future_builder.dart';
+import 'package:dio/dio.dart';
 class HomeComponent extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -22,12 +23,15 @@ class _HomeComponentState extends State<HomeComponent>
   void initState() {
     super.initState();
   }
-
+  Future _getData() async{
+    Dio dio = new Dio();
+    Response response=await dio.get("http://qa-video.oss-cn-beijing.aliyuncs.com/mp4/xfxz0227tvc.mp4");
+    return response.data;
+  }
   @override
   void dispose() {
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +48,7 @@ class _HomeComponentState extends State<HomeComponent>
         highlightElevation: 2.0,
         onPressed: () {},
       ),
-      body: HomeTabWidget(),
+      body: CommonFutureBuilder(contentWidget: Container(),future: _getData()),
     );
   }
 }
