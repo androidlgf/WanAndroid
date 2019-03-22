@@ -1,5 +1,6 @@
 import 'dart:async' show Future;
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 //重复刷新解决
 // 1.AsyncMemoizer asyncMemoizer = AsyncMemoizer(); memoizer.runOnce(() async{}
 // 2.initState()/
@@ -44,7 +45,7 @@ class _CommonFutureBuilderState extends State<CommonFutureBuilder> {
         );
       case ConnectionState.waiting:
         return Center(
-          child: CircularProgressIndicator(),
+          child: SpinKitCircle(color: Colors.red),
         );
       case ConnectionState.done:
         if (snapshot.hasError) {
