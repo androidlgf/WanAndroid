@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:wanandroid/components/home/view/home_tab_widget.dart';
+import 'package:wanandroid/components/home/widget/home_tab_widget.dart';
 import 'package:wanandroid/widget/async_future_builder.dart';
 import 'package:dio/dio.dart';
 class HomeComponent extends StatefulWidget {
@@ -48,7 +48,7 @@ class _HomeComponentState extends State<HomeComponent>
         highlightElevation: 2.0,
         onPressed: () {},
       ),
-      body: CommonFutureBuilder(contentWidget: Container(),future: _getData()),
+      body: HomeTabWidget(),
     );
   }
 }

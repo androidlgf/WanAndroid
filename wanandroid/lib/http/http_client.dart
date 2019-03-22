@@ -90,7 +90,9 @@ class HttpClient {
   Future<RequestOptions> _mergeOptions(RequestOptions newOptions) async {
     // default options
     var oldOps = await _buildDefaultOptions(newOptions);
-    oldOps.data = FormData.from(newOptions.data);
+    if(newOptions.data!=null){
+      oldOps.data = FormData.from(newOptions.data);
+    }
     return oldOps;
   }
 

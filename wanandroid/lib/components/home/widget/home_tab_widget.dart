@@ -2,6 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:wanandroid/values/json_strings.dart';
 import 'package:wanandroid/components/home/data/local_home_tab_data.dart';
+import 'package:wanandroid/components/home/view/home_navigation_tab.dart';
+import 'package:wanandroid/components/home/view/home_official_tab.dart';
+import 'package:wanandroid/components/home/view/home_page_tab.dart';
+import 'package:wanandroid/components/home/view/home_project_category_tab.dart';
+import 'package:wanandroid/components/home/view/home_project_tab.dart';
+import 'package:wanandroid/components/home/view/home_system_tab.dart';
+import 'package:wanandroid/components/home/view/home_tool_tab.dart';
 
 class HomeTabWidget extends StatefulWidget {
   @override
@@ -81,12 +88,36 @@ class _HomeTabWidgetState extends State<HomeTabWidget>
                 itemCount: tabs.length,
                 controller: pageController,
                 onPageChanged: (index) {
-                  if(isPageCanChanged){
+                  if (isPageCanChanged) {
                     onPageChange(index);
                   }
                 },
                 itemBuilder: (BuildContext context, int index) {
-                  return Text(tabs[index].text);
+                  switch (index) {
+                    case 0:
+                      return HomePageTabWidget();
+                      break;
+                    case 1:
+                      return HomeProjectTabWidget();
+                      break;
+                    case 2:
+                      return HomeSystemTabWidget();
+                      break;
+                    case 3:
+                      return HomeOfficialTabWidget();
+                      break;
+                    case 4:
+                      return HomeNavigationTabWidget();
+                      break;
+                    case 5:
+                      return HomeProjectTabWidget();
+                      break;
+                    case 0:
+                      return HomeToolTabWidget();
+                      break;
+                    default:
+                      return null;
+                  }
                 }),
             flex: 1)
       ],
