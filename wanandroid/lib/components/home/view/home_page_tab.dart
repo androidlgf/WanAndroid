@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:wanandroid/dio/home_banner_dao.dart';
+import 'package:wanandroid/dio/home_dao.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wanandroid/data/home_banner_data.dart';
+import 'package:easy_listview/easy_listview.dart';
+import 'package:wanandroid/data/home_page_tab_data.dart';
 
 //首页Tab/
 class HomePageTabWidget extends StatefulWidget {
@@ -35,7 +37,7 @@ class HomeAutoSlideWidget extends StatefulWidget {
 }
 
 class _HomeAutoSlideState extends State<HomeAutoSlideWidget> {
-  HomeBannerDao _dao;
+  HomeDao _dao;
   List<BannerData> listOfBanner = [];
 
   @override
@@ -45,7 +47,7 @@ class _HomeAutoSlideState extends State<HomeAutoSlideWidget> {
   }
 
   void getBannerData() async {
-    _dao =new HomeBannerDao();
+    _dao ??= new HomeDao();
     HomeBannerData bannerData = await _dao?.getHomeBannerData();
     setState(() {
       listOfBanner = bannerData?.data;
@@ -68,5 +70,44 @@ class _HomeAutoSlideState extends State<HomeAutoSlideWidget> {
             );
           },
         ));
+  }
+}
+
+class HomePageEasyListWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _HomePageEasyListState();
+  }
+}
+
+class _HomePageEasyListState extends State<HomePageEasyListWidget> {
+  HomeDao _dao;
+  List<PageTabData> listOfPageTabData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getPageTabData();
+  }
+
+  void getPageTabData() async {
+    _dao ??= new HomeDao();
+    HomePageTabDataBean bannerData = await _dao?.getPageTabData();
+    setState(() {
+      listOfPageTabData = bannerData.data.datas;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return EasyListView(
+        itemCount: listOfPageTabData.length + 1,
+        loadMore: false,
+        headerBuilder: (BuildContext context) {
+          return HomeAutoSlideWidget();
+        },
+        itemBuilder: (BuildContext context, int index) {
+          return Text(listOfPageTabData[index].title);
+        });
   }
 }
