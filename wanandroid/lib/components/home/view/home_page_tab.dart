@@ -24,7 +24,7 @@ class _HomePageTabState extends State<HomePageTabWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[HomeAutoSlideWidget()],
+      children: <Widget>[HomePageEasyListWidget()],
     );
   }
 }
@@ -94,20 +94,26 @@ class _HomePageEasyListState extends State<HomePageEasyListWidget> {
     _dao ??= new HomeDao();
     HomePageTabDataBean bannerData = await _dao?.getPageTabData();
     setState(() {
-      listOfPageTabData = bannerData.data.datas;
+      listOfPageTabData.addAll(bannerData.data.datas);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return EasyListView(
-        itemCount: listOfPageTabData.length + 1,
-        loadMore: false,
-        headerBuilder: (BuildContext context) {
-          return HomeAutoSlideWidget();
-        },
-        itemBuilder: (BuildContext context, int index) {
-          return Text(listOfPageTabData[index].title);
-        });
+    return Expanded(child:EasyListView(
+      itemCount: listOfPageTabData.length,
+      headerBuilder: (BuildContext context){
+        return HomeAutoSlideWidget();
+      },
+      itemBuilder: (BuildContext context,int index){
+        return Container(
+          height: 60,
+          alignment: Alignment.center,
+          child: Text(listOfPageTabData[index].title),
+        );
+      },
+    ),
+
+    flex: 1,);
   }
 }
