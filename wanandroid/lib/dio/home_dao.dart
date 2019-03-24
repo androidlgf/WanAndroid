@@ -16,8 +16,9 @@ class HomeDao extends BaseDao {
   }
 
   //获取首页文章列表/
-  Future<HomePageTabDataBean> getPageTabData() async {
-    Response response = await client.get(Api.WAN_PAGE_TAB);
+  Future<HomePageTabDataBean> getPageTabData(int page) async {
+    Response response = await client
+        .get(Api.WAN_PAGE_TAB + page.toString() + Api.WAN_PARAM_JSON);
     var data = response?.data;
     if (data == null) {
       return null;

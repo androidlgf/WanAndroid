@@ -49,6 +49,9 @@ class _HomeAutoSlideState extends State<HomeAutoSlideWidget> {
   void getBannerData() async {
     _dao ??= new HomeDao();
     HomeBannerData bannerData = await _dao?.getHomeBannerData();
+    if(bannerData==null){
+      return;
+    }
     setState(() {
       listOfBanner = bannerData?.data;
     });
@@ -83,6 +86,10 @@ class HomePageEasyListWidget extends StatefulWidget {
 class _HomePageEasyListState extends State<HomePageEasyListWidget> {
   HomeDao _dao;
   List<PageTabData> listOfPageTabData = [];
+  int curPage = 0;
+  int total = 0;
+  int pageSize = 0;
+  bool isLoadMore = false;
 
   @override
   void initState() {
@@ -92,9 +99,22 @@ class _HomePageEasyListState extends State<HomePageEasyListWidget> {
 
   void getPageTabData() async {
     _dao ??= new HomeDao();
-    HomePageTabDataBean bannerData = await _dao?.getPageTabData();
+    HomePageTabDataBean bannerData = await _dao?.getPageTabData(curPage);
     setState(() {
-      listOfPageTabData.addAll(bannerData.data.datas);
+      HomePageTabData data = bannerData.data;
+      if (data == null) {
+        return;
+      }
+      curPage += 1;
+      total = data.total;
+      total = 40;
+      pageSize = data.size;
+      if (curPage * pageSize >= total) {
+        isLoadMore = false;
+      } else {
+        isLoadMore = true;
+      }
+      listOfPageTabData.addAll(data.datas);
     });
   }
 
@@ -102,7 +122,11 @@ class _HomePageEasyListState extends State<HomePageEasyListWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: EasyListView(
+        loadMore: isLoadMore,
         itemCount: listOfPageTabData.length,
+        onLoadMore: () {
+          getPageTabData();
+        },
         headerBuilder: (BuildContext context) {
           return HomeAutoSlideWidget();
         },
