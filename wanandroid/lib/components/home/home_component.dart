@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:wanandroid/components/home/widget/home_tab_widget.dart';
 import 'package:wanandroid/widget/async_future_builder.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class HomeComponent extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -34,6 +36,7 @@ class _HomeComponentState extends State<HomeComponent>
   }
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 375, height: 667)..init(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),

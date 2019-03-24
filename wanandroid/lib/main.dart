@@ -43,9 +43,10 @@ class _WanAndroidState extends State<WanAndroidWidget> {
       model: model,
       child: MaterialApp(
         theme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Color.fromRGBO(18, 18, 18, 1),
-        ),
+            brightness: Brightness.dark,
+            primaryColor: Color.fromRGBO(18, 18, 18, 1),
+            cardColor: Colors.white,
+            scaffoldBackgroundColor:const Color(0xFFF0F0F0)),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: Application.router.generator,
       ),

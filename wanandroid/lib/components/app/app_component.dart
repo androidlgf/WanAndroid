@@ -5,6 +5,7 @@ import 'package:wanandroid/config/application.dart';
 import 'package:wanandroid/widget/skip_down_time.dart';
 import 'package:fluro/fluro.dart';
 import 'package:wanandroid/values/strings.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppComponent extends StatefulWidget {
   @override
@@ -28,6 +29,7 @@ class _AppComponentState extends State<AppComponent> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 375, height: 667)..init(context);
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
