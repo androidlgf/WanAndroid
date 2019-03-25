@@ -63,9 +63,24 @@ class _HomeAutoSlideState extends State<HomeAutoSlideWidget> {
         height: ScreenUtil().setHeight(180),
         color: Colors.white,
         child: Swiper(
-          autoplay: true,
+          autoplay: false,
           itemCount: listOfBanner?.length,
-          pagination: SwiperPagination(),
+          pagination: new SwiperPagination(
+              margin: new EdgeInsets.all(0.0),
+              builder: new SwiperCustomPagination(
+                  builder: (BuildContext context, SwiperPluginConfig config) {
+                return Container(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 10),
+                    child: Text(
+                      "${config.activeIndex + 1}/${config.itemCount}",
+                      style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                    ),
+                  ),
+                  constraints: BoxConstraints.expand(height: 25.0),
+                );
+              })),
           itemBuilder: (BuildContext context, int index) {
             return CachedNetworkImage(
               imageUrl: listOfBanner[index]?.imagePath,
