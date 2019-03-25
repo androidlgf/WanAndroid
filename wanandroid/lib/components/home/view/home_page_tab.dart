@@ -6,7 +6,7 @@ import 'package:wanandroid/data/home_banner_data.dart';
 import 'package:easy_listview/easy_listview.dart';
 import 'package:wanandroid/data/home_page_tab_data.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:wanandroid/values/strings.dart';
 //首页Tab/
 class HomePageTabWidget extends StatefulWidget {
   @override
@@ -188,13 +188,13 @@ class _HomePageEasyListState extends State<HomePageEasyListWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '作者:' + object?.author,
+                    home_page_tab_author_text + object?.author,
                     style:
                         TextStyle(color: const Color(0xFF2E3138), fontSize: 12),
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
-                    child: Text('时间:' + object?.niceDate,
+                    child: Text(home_page_tab_niceDate_text + object?.niceDate,
                         style: TextStyle(
                             color: const Color(0xFF2E3138), fontSize: 12)),
                   )
@@ -214,7 +214,7 @@ class _HomePageEasyListState extends State<HomePageEasyListWidget> {
                         Color.fromRGBO(95, 195, 243, 1.0),
                         Color.fromRGBO(95, 195, 243, 1.0)
                       ], begin: Alignment.topLeft, end: Alignment.topRight)),
-                  child: Text(object.chapterName),
+                  child: Text(home_page_tab_title_text),
                 ),
               ),
               flex: 1,
