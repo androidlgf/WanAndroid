@@ -6,6 +6,7 @@ import 'package:wanandroid/data/home_page_tab_data.dart';
 import 'package:wanandroid/data/home_project_tab_data.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wanandroid/values/strings.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 //项目Tab/
 class HomeProjectTabWidget extends StatefulWidget {
@@ -70,14 +71,17 @@ class _HomeProjectEasyListState extends State<HomeProjectEasyListWidget> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: EasyListView(
-        loadMore: isLoadMore,
+      child: StaggeredGridView.countBuilder(
+        primary: false,
+        crossAxisCount: 4,
+        mainAxisSpacing: 4.0,
+        crossAxisSpacing: 4.0,
         itemCount: listOfProjectTabData.length,
-        onLoadMore: () {
-          getProjectTabData();
-        },
-        itemBuilder: (BuildContext context, int index) {
+        itemBuilder: (context, index) {
           return _buildItem(listOfProjectTabData[index], index);
+        },
+        staggeredTileBuilder: (index) {
+          return StaggeredTile.fit(2);
         },
       ),
       flex: 1,
@@ -86,81 +90,16 @@ class _HomeProjectEasyListState extends State<HomeProjectEasyListWidget> {
 
   Widget _buildItem(ProjectTabData object, int index) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+//      margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
       elevation: 5.0,
-      child: Container(
-        height: ScreenUtil().setHeight(135),
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              height: ScreenUtil().setHeight(40),
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(left: 15),
-              child: Text(
-                object?.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: const Color(0xFF2E3138), fontSize: 15),
-              ),
-            ),
-            Container(
-              height: 1,
-              color: const Color(0xFFF0F0F0),
-            ),
-            Container(
-              height: ScreenUtil().setHeight(40),
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(left: 15.0, right: 15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      home_page_tab_author_text + object?.author,
-                      style: TextStyle(
-                          color: const Color(0xFF2E3138), fontSize: 12),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      padding:
-                      EdgeInsets.only(right: ScreenUtil().setWidth(10)),
-                      child: Text(
-                          home_page_tab_niceDate_text + object?.niceDate,
-                          style: TextStyle(
-                              color: const Color(0xFF2E3138), fontSize: 12)),
-                    ),
-                    flex: 1,
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: ScreenUtil().setWidth(69),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      gradient: LinearGradient(colors: [
-                        Color.fromRGBO(95, 231, 243, 1.0),
-                        Color.fromRGBO(95, 195, 243, 1.0),
-                        Color.fromRGBO(95, 195, 243, 1.0)
-                      ], begin: Alignment.topLeft, end: Alignment.topRight)),
-                  child: Text('项目'),
-                ),
-              ),
-              flex: 1,
-            )
-          ],
-        ),
+      child: Image.network(
+        object?.envelopePic,
+        fit: BoxFit.fill,
       ),
+//      child: AspectRatio(
+//          aspectRatio:2/3,
+//          child: Image.network(object?.envelopePic,fit: BoxFit.fill,),
+//      ),
     );
   }
 }
