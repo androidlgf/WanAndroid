@@ -122,7 +122,6 @@ class _HomePageEasyListState extends State<HomePageEasyListWidget> {
       }
       curPage += 1;
       total = data.total;
-      total = 40;
       pageSize = data.size;
       if (curPage * pageSize >= total) {
         isLoadMore = false;

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'local_home_tab_data.g.dart';
 
-
+//flutter packages pub run build_runner build/
 List<LocalHomeTab> getLocalHomeTabList(List<dynamic> list){
   List<LocalHomeTab> result = [];
   list.forEach((item){
