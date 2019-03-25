@@ -49,7 +49,7 @@ class _HomeAutoSlideState extends State<HomeAutoSlideWidget> {
   void getBannerData() async {
     _dao ??= new HomeDao();
     HomeBannerData bannerData = await _dao?.getHomeBannerData();
-    if(bannerData==null){
+    if (bannerData == null) {
       return;
     }
     setState(() {
@@ -97,13 +97,13 @@ class _HomePageEasyListState extends State<HomePageEasyListWidget> {
     getPageTabData();
   }
 
-  void getPageTabData() async {
+  Future<HomePageTabDataBean> getPageTabData() async {
     _dao ??= new HomeDao();
     HomePageTabDataBean bannerData = await _dao?.getPageTabData(curPage);
     setState(() {
       HomePageTabData data = bannerData.data;
       if (data == null) {
-        return;
+        return null;
       }
       curPage += 1;
       total = data.total;
@@ -116,6 +116,7 @@ class _HomePageEasyListState extends State<HomePageEasyListWidget> {
       }
       listOfPageTabData.addAll(data.datas);
     });
+    return bannerData;
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:async' show Future;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 //重复刷新解决
 // 1.AsyncMemoizer asyncMemoizer = AsyncMemoizer(); memoizer.runOnce(() async{}
 // 2.initState()/
@@ -52,6 +53,9 @@ class _CommonFutureBuilderState extends State<CommonFutureBuilder> {
           if (widget.connectionError != null) {
             widget.connectionError(snapshot.error);
           }
+          final snackBar = new SnackBar(content: new Text(snapshot.error));
+
+          Scaffold.of(context).showSnackBar(snackBar);
           return Center(
             child: Text('Error: ${snapshot.error}'),
           );

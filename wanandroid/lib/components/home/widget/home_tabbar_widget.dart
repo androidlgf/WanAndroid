@@ -6,7 +6,6 @@ import 'package:wanandroid/components/home/data/local_home_tab_data.dart';
 class HomeTabBarWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _HomeTabBarState();
   }
 }
