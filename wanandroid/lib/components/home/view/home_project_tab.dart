@@ -91,15 +91,18 @@ class _HomeProjectEasyListState extends State<HomeProjectEasyListWidget> {
   Widget _buildItem(ProjectTabData object, int index) {
     return Card(
 //      margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-      elevation: 5.0,
-      child: Image.network(
-        object?.envelopePic,
-        fit: BoxFit.fill,
-      ),
+        elevation: 5.0,
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          child: Image.network(
+            object?.envelopePic,
+            fit: BoxFit.fill,
+          ),
+        )
 //      child: AspectRatio(
 //          aspectRatio:2/3,
 //          child: Image.network(object?.envelopePic,fit: BoxFit.fill,),
 //      ),
-    );
+        );
   }
 }
