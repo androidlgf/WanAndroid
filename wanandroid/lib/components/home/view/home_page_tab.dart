@@ -7,6 +7,7 @@ import 'package:easy_listview/easy_listview.dart';
 import 'package:wanandroid/data/home_page_tab_data.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wanandroid/values/strings.dart';
+
 //首页Tab/
 class HomePageTabWidget extends StatefulWidget {
   @override
@@ -186,16 +187,25 @@ class _HomePageEasyListState extends State<HomePageEasyListWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    home_page_tab_author_text + object?.author,
-                    style:
-                        TextStyle(color: const Color(0xFF2E3138), fontSize: 12),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      home_page_tab_author_text + object?.author,
+                      style: TextStyle(
+                          color: const Color(0xFF2E3138), fontSize: 12),
+                    ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: ScreenUtil().setWidth(100)),
-                    child: Text(home_page_tab_niceDate_text + object?.niceDate,
-                        style: TextStyle(
-                            color: const Color(0xFF2E3138), fontSize: 12)),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      padding:
+                          EdgeInsets.only(right: ScreenUtil().setWidth(10)),
+                      child: Text(
+                          home_page_tab_niceDate_text + object?.niceDate,
+                          style: TextStyle(
+                              color: const Color(0xFF2E3138), fontSize: 12)),
+                    ),
+                    flex: 1,
                   )
                 ],
               ),
