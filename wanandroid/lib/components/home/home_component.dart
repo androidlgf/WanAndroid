@@ -54,6 +54,13 @@ class _HomeComponentState extends State<HomeComponent>
         highlightElevation: 2.0,
         onPressed: () {},
       ),
+      bottomNavigationBar:
+          BottomNavigationBar(type: BottomNavigationBarType.fixed,currentIndex: 1, items: [
+        BottomNavigationBarItem(icon: Icon(Icons.map), title: Text("首页")),
+        BottomNavigationBarItem(icon: Icon(Icons.tab), title: Text("体系")),
+        BottomNavigationBarItem(icon: Icon(Icons.assessment), title: Text("项目")),
+        BottomNavigationBarItem(icon: Icon(Icons.assignment_ind), title: Text("我的")),
+      ]),
       body: HomeTabWidget(),
     );
   }
