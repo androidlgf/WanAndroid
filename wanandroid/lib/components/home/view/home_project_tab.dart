@@ -7,6 +7,7 @@ import 'package:wanandroid/data/home_project_tab_data.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wanandroid/values/strings.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 //项目Tab/
 class HomeProjectTabWidget extends StatefulWidget {
@@ -74,8 +75,8 @@ class _HomeProjectEasyListState extends State<HomeProjectEasyListWidget> {
       child: StaggeredGridView.countBuilder(
         primary: false,
         crossAxisCount: 4,
-        mainAxisSpacing: 4.0,
-        crossAxisSpacing: 4.0,
+        mainAxisSpacing: 10.0,
+        crossAxisSpacing: 10.0,
         itemCount: listOfProjectTabData.length,
         itemBuilder: (context, index) {
           return _buildItem(listOfProjectTabData[index], index);
@@ -89,20 +90,13 @@ class _HomeProjectEasyListState extends State<HomeProjectEasyListWidget> {
   }
 
   Widget _buildItem(ProjectTabData object, int index) {
-    return Card(
-//      margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-        elevation: 5.0,
+    return Container(
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          child: Image.network(
-            object?.envelopePic,
-            fit: BoxFit.fill,
+          child: CachedNetworkImage(
+            imageUrl: object?.envelopePic,
+            fit: BoxFit.cover,
           ),
-        )
-//      child: AspectRatio(
-//          aspectRatio:2/3,
-//          child: Image.network(object?.envelopePic,fit: BoxFit.fill,),
-//      ),
-        );
+        ));
   }
 }
