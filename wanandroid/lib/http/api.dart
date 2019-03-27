@@ -9,4 +9,10 @@ class Api {
 
   static const String WAN_TAB_PROJECT =
       WAN_HOST + '/article/listproject/'; //所有项目列表
+
+  static const String WAN_SYSTEM_URL = WAN_HOST + '/tree/json'; //体系数据列表
+  static const String WAN_OFFICIAL_URL =
+      WAN_HOST + '/wxarticle/list/408/1/json'; //获取公众号列表
+  static const String WAN_NAVIGATION_URL = WAN_HOST + '/navi/json'; //导航列表
+  static const String WAN_NEW_PROJECT = '/article/listproject/0/json';
 }
