@@ -112,7 +112,7 @@ class _HomeTabWidgetState extends State<HomeTabWidget>
                     case 5:
                       return HomeProjectTabWidget();
                       break;
-                    case 0:
+                    case 6:
                       return HomeToolTabWidget();
                       break;
                     default:

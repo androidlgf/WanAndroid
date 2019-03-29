@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:wanandroid/components/home/widget/home_tab_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wanandroid/blocs/bloc_provider.dart';
+import 'package:wanandroid/blocs/bloc_home.dart';
 
 class HomeComponent extends StatefulWidget {
   @override
@@ -54,14 +56,18 @@ class _HomeComponentState extends State<HomeComponent>
         highlightElevation: 2.0,
         onPressed: () {},
       ),
-      bottomNavigationBar:
-          BottomNavigationBar(type: BottomNavigationBarType.fixed,currentIndex: 1, items: [
-        BottomNavigationBarItem(icon: Icon(Icons.map), title: Text("首页")),
-        BottomNavigationBarItem(icon: Icon(Icons.tab), title: Text("体系")),
-        BottomNavigationBarItem(icon: Icon(Icons.assessment), title: Text("项目")),
-        BottomNavigationBarItem(icon: Icon(Icons.assignment_ind), title: Text("我的")),
-      ]),
-      body: HomeTabWidget(),
+      bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: 1,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.map), title: Text("首页")),
+            BottomNavigationBarItem(icon: Icon(Icons.tab), title: Text("体系")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.assessment), title: Text("项目")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.assignment_ind), title: Text("我的")),
+          ]),
+      body: BlocProvider<HomeBloc>(child: HomeTabWidget(), bloc: HomeBloc()),
     );
   }
 }
