@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wanandroid/blocs/bloc_pull_to_refresh.dart';
 import 'package:wanandroid/config/component_index.dart';
 
 //列表上拉加载更多/
@@ -12,7 +11,7 @@ class PullToRefreshWidget extends StatelessWidget {
       this.footerBuilder})
       : super(key: key);
 
-  final PullToRefreshBloc bloc;
+  final  bloc;
   final IndexedWidgetBuilder itemBuilder;
   final WidgetBuilder headerBuilder;
   final WidgetBuilder footerBuilder;

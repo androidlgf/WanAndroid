@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wanandroid/blocs/bloc_provider.dart';
 import 'package:wanandroid/blocs/bloc_home.dart';
+import 'package:wanandroid/blocs/bloc_pull_to_refresh.dart';
 
 class HomeComponent extends StatefulWidget {
   @override
@@ -67,7 +68,7 @@ class _HomeComponentState extends State<HomeComponent>
             BottomNavigationBarItem(
                 icon: Icon(Icons.assignment_ind), title: Text("我的")),
           ]),
-      body: BlocProvider<HomeBloc>(child: HomeTabWidget(), bloc: HomeBloc()),
+      body: BlocProvider<PullToRefreshBloc>(child: HomeTabWidget(), bloc: PullToRefreshBloc()),
     );
   }
 }
