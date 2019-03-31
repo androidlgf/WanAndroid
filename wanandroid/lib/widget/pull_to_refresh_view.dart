@@ -58,6 +58,17 @@ enum ItemType { header, footer, data, dividerData }
 
 class PullToRefreshListViewState extends State<PullToRefreshListView>
     with TickerProviderStateMixin {
+  final GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 0), () {
+      _refreshKey.currentState.show();
+      return true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) => widget.headerSliverBuilder != null
@@ -93,6 +104,7 @@ class PullToRefreshListViewState extends State<PullToRefreshListView>
     var children = <Widget>[
       widget.isSliverMode
           ? RefreshIndicator(
+              key: _refreshKey,
               child: SmartRefresher(
                 enablePullDown: widget.enablePullDown,
                 enablePullUp: widget.enablePullUp,
@@ -115,6 +127,7 @@ class PullToRefreshListViewState extends State<PullToRefreshListView>
               },
             )
           : RefreshIndicator(
+              key: _refreshKey,
               child: SmartRefresher(
                   enablePullDown: widget.enablePullDown,
                   enablePullUp: widget.enablePullUp,

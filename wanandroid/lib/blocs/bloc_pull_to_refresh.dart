@@ -22,6 +22,8 @@ class PullToRefreshBloc extends IPullToRefreshBloc {
 
   Stream<List<PageTabData>> get pageTabStream => _pageTabSubject.stream;
 
+  int _reposPage = 0;
+  int requestState=RequestStatus.requesting;
   //获取轮询Data/
   Future getBanner() async {
     _dao ??= new HomeDao();
@@ -35,15 +37,18 @@ class PullToRefreshBloc extends IPullToRefreshBloc {
 
   //获取列表数据/
   Future<List<PageTabData>> getPageTabData(int page) async {
+    print("===data=="+page.toString());
     _dao ??= new HomeDao();
     HomePageTabDataBean bannerData = await _dao?.getPageTabData(page);
     if (bannerData == null) {
       return null;
     }
+    print("===data=="+bannerData.toString());
     HomePageTabData data = bannerData.data;
     if (data == null) {
       return null;
     }
+    _reposPage += 1;
     pageTabSink.add(data.datas);
     return data?.datas;
   }
@@ -51,7 +56,7 @@ class PullToRefreshBloc extends IPullToRefreshBloc {
   @override
   Future request({String path, int page}) async {
     _dao ??= new HomeDao();
-    return null;
+    return getPageTabData(page);
   }
 
   @override
@@ -63,6 +68,15 @@ class PullToRefreshBloc extends IPullToRefreshBloc {
   Future onRefresh({String labelId}) {
     return null;
   }
+
   @override
   void dispose() {}
+}
+
+class RequestStatus {
+  static const int requestFailed = 0;
+  static const int requestSuccess = 1;
+  static const int requesting = 2;
+  static const int requestCompleted = 3;
+  static const int requestNoMore = 4;
 }

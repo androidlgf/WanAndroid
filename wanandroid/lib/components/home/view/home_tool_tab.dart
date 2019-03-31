@@ -20,8 +20,8 @@ class HomeToolTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PullToRefreshBloc bloc = BlocProvider.of<PullToRefreshBloc>(context);
-    bloc.getPageTabData(0);
     bloc.getBanner();
+    bloc.request(page: 0);
     return StreamBuilder(
       stream: bloc.pageTabStream,
       builder:
@@ -31,12 +31,11 @@ class HomeToolTabWidget extends StatelessWidget {
             itemCount: snapshot.data?.length,
             refreshController: refreshController,
             onRefresh: (up) {
-              print("====up==="+up.toString());
-//              if(up){
-//                bloc.getPageTabData(0);
-//              }else{
-//                return refreshController.sendBack(up, RefreshStatus.refreshing);
-//              }
+              if(up){
+                bloc.request(page: 0);
+              }else{
+                bloc.request(page: 1);
+              }
             },
             itemBuilder: (BuildContext context, int index) {
               return _buildItem(snapshot.data[index], index);
