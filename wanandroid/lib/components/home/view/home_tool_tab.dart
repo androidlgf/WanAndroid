@@ -25,38 +25,34 @@ class HomeToolTabWidget extends StatelessWidget {
     });
     bloc.getBanner();
     bloc.request(page: 0);
-    return StreamBuilder(
+    return CommonStreamBuilder(
       stream: bloc.pageTabStream,
-      builder:
-          (BuildContext context, AsyncSnapshot<List<PageTabData>> snapshot) {
-        if (snapshot.hasData) {
-          return PullToRefreshListView(
-            itemCount: listOfData.length,
-            refreshController: refreshController,
-            onRefresh: (up) {
-              if (up) {
-                bloc.request(page: 0);
-              } else {
-                bloc.request();
-              }
-            },
-            itemBuilder: (BuildContext context, int index) {
-              return _buildItem(listOfData[index], index);
-            },
-            headerBuilder: (BuildContext context) {
-              return StreamBuilder(
-                  stream: bloc.bannerStream,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<BannerData>> snapshot) {
-                    if (snapshot.hasData) {
-                      return _buildBanner(context, snapshot.data);
-                    }
-                    return Container(height: 0);
-                  });
-            },
-          );
-        }
-        return Container(height: 0);
+      builder: (BuildContext context,AsyncSnapshot<dynamic> snapshot){
+        return PullToRefreshListView(
+          itemCount: listOfData.length,
+          refreshController: refreshController,
+          onRefresh: (up) {
+            if (up) {
+              bloc.request(page: 0);
+            } else {
+              bloc.request();
+            }
+          },
+          itemBuilder: (BuildContext context, int index) {
+            return _buildItem(listOfData[index], index);
+          },
+          headerBuilder: (BuildContext context) {
+            return StreamBuilder(
+                stream: bloc.bannerStream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<BannerData>> snapshot) {
+                  if (snapshot.hasData) {
+                    return _buildBanner(context, snapshot.data);
+                  }
+                  return Container(height: 0);
+                });
+          },
+        );
       },
     );
   }

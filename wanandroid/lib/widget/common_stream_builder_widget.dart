@@ -7,8 +7,8 @@ class CommonStreamBuilder<T> extends StatefulWidget {
       this.waitingWidget,
       this.errorWidget,
       this.emptyWidget,
-      this.contentWidget,
-      this.stream})
+      this.stream,
+      this.builder})
       : super(key: key);
 
   //加载中Widget/
@@ -20,10 +20,8 @@ class CommonStreamBuilder<T> extends StatefulWidget {
   //空布局/
   final Widget emptyWidget;
 
-  //填充内容布局
-  final Widget contentWidget;
-
   final Stream<T> stream;
+  final AsyncWidgetBuilder<T> builder;
 
   @override
   State<StatefulWidget> createState() {
@@ -36,7 +34,7 @@ class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: widget.stream,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           ConnectionState connectionState = snapshot?.connectionState;
           if (ConnectionState.active == connectionState) {
           } else if (ConnectionState.done == connectionState) {
@@ -51,11 +49,8 @@ class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
                 ? widget.errorWidget
                 : _buildErrorWidget(context, snapshot.error.toString());
           }
-          if (snapshot.hasData) {
-            print("===statu==="+snapshot.data.toString());
-            return widget.contentWidget != null
-                ? widget.contentWidget
-                : _buildContentWidget(context);
+          if (snapshot.hasData && widget.builder != null) {
+            return widget.builder(context, snapshot);
           }
           return _buildEmptyWidget(context);
         });
