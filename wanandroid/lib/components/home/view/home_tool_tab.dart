@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wanandroid/blocs/bloc_home.dart';
 import 'package:wanandroid/blocs/bloc_provider.dart';
 import 'package:wanandroid/data/home_banner_data.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -9,18 +8,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wanandroid/values/strings.dart';
 import 'package:wanandroid/data/home_page_tab_data.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:wanandroid/blocs/Ibloc_pull_to_refresh.dart';
 import 'package:wanandroid/blocs/bloc_pull_to_refresh.dart';
-import 'package:wanandroid/data/home_page_tab_data.dart';
 import 'package:wanandroid/widget/common_stream_builder_widget.dart';
-
 //工具Tab/
 class HomeToolTabWidget extends StatelessWidget {
   final RefreshController refreshController = new RefreshController();
-
+  final List<PageTabData> listOfData=[];
   @override
   Widget build(BuildContext context) {
     final PullToRefreshBloc bloc = BlocProvider.of<PullToRefreshBloc>(context);
+    bloc.statusEventStream.listen((event){
+        refreshController.sendBack(false, event.status);
+    });
+    bloc.pageTabStream.listen((pageDataObjects){
+      listOfData.addAll(pageDataObjects);
+    });
     bloc.getBanner();
     bloc.request(page: 0);
     return StreamBuilder(
@@ -29,24 +31,24 @@ class HomeToolTabWidget extends StatelessWidget {
           (BuildContext context, AsyncSnapshot<List<PageTabData>> snapshot) {
         if (snapshot.hasData) {
           return PullToRefreshListView(
-            itemCount: snapshot.data?.length,
+            itemCount: listOfData.length,
             refreshController: refreshController,
             onRefresh: (up) {
-              if(up){
+              if (up) {
                 bloc.request(page: 0);
-              }else{
-                bloc.request(page: 1);
+              } else {
+                bloc.request();
               }
             },
             itemBuilder: (BuildContext context, int index) {
-              return _buildItem(snapshot.data[index], index);
+              return _buildItem(listOfData[index], index);
             },
             headerBuilder: (BuildContext context) {
               return StreamBuilder(
                   stream: bloc.bannerStream,
                   builder: (BuildContext context,
                       AsyncSnapshot<List<BannerData>> snapshot) {
-                    if(snapshot.hasData){
+                    if (snapshot.hasData) {
                       return _buildBanner(context, snapshot.data);
                     }
                     return Container(height: 0);

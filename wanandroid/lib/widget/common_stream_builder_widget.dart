@@ -52,10 +52,12 @@ class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
                 : _buildErrorWidget(context, snapshot.error.toString());
           }
           if (snapshot.hasData) {
+            print("===statu==="+snapshot.data.toString());
             return widget.contentWidget != null
                 ? widget.contentWidget
                 : _buildContentWidget(context);
           }
+          return _buildEmptyWidget(context);
         });
   }
 
