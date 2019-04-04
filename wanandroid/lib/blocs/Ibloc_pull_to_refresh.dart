@@ -4,6 +4,11 @@ class IPullToRefreshBloc extends BlocBase {
   @override
   void dispose() {}
 
+  @override
+  void initState() {}
+
+  @override
+  void didChangeDependencies() {}
   //网络请求/
   Future request({String path, int page}) async {
     return null;
@@ -19,8 +24,7 @@ class IPullToRefreshBloc extends BlocBase {
   }
 
   //下拉刷新/
-  @override
-  Future onRefresh({String labelId}) {
+  Future onRefresh() {
     return null;
   }
 }

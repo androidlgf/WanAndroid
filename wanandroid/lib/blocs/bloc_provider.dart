@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 // 所有 BLoCs 的通用接口
 abstract class BlocBase {
   void dispose();
+
+  void initState();
+
+  void didChangeDependencies();
 }
 
 // 通用 BLoC provider
@@ -31,13 +35,25 @@ class BlocProvider<T extends BlocBase> extends StatefulWidget {
 
 class _BlocProviderState<T> extends State<BlocProvider<BlocBase>> {
   @override
-  void dispose() {
-    widget.bloc?.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    widget.bloc?.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    widget.bloc?.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return widget.child;
+  }
+
+  @override
+  void dispose() {
+    widget.bloc?.dispose();
+    super.dispose();
   }
 }

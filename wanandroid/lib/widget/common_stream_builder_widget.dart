@@ -66,9 +66,7 @@ class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
   }
 
   Widget _buildWaitingWidget(BuildContext context) {
-    return Center(
-      child: SpinKitCircle(color: Colors.red),
-    );
+    return Center(child: SpinKitCircle(color: Colors.red));
   }
 
   Widget _buildEmptyWidget(BuildContext context) {

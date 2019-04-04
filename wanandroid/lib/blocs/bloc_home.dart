@@ -5,7 +5,6 @@ import 'package:wanandroid/dio/home_dao.dart';
 import 'package:wanandroid/data/home_banner_data.dart';
 import 'package:wanandroid/blocs/bloc_provider.dart';
 
-
 class HomeBloc implements BlocBase {
   HomeDao _dao;
 
@@ -15,6 +14,12 @@ class HomeBloc implements BlocBase {
   Sink<List<BannerData>> get _bannerSink => _banner.sink;
 
   Stream<List<BannerData>> get bannerStream => _banner.stream;
+
+  @override
+  void initState() {}
+
+  @override
+  void didChangeDependencies() {}
 
   void dispose() {
     _banner.close();

@@ -13,6 +13,7 @@ import 'package:wanandroid/components/home/view/home_bottom_mine_tab.dart';
 import 'package:wanandroid/components/home/view/home_bottom_system_tab.dart';
 import 'package:wanandroid/components/home/view/home_bottom_project_tab.dart';
 import 'package:wanandroid/components/home/view/home_bottom_page_tab.dart';
+import 'package:wanandroid/blocs/bloc_home_page_tab.dart';
 
 class HomeComponent extends StatefulWidget {
   @override
@@ -105,7 +106,8 @@ class _HomeComponentState extends State<HomeComponent>
           //首页/
           Offstage(
             offstage: _bottomTabIndex != 0,
-            child: BottomHomePageWidget(),
+            child: BlocProvider(
+                child: BottomHomePageWidget(), bloc: HomePageTabBloc()),
           ),
           //体系/
           Offstage(
