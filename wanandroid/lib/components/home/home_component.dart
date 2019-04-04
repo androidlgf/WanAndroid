@@ -6,6 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wanandroid/blocs/bloc_provider.dart';
 import 'package:wanandroid/blocs/bloc_home.dart';
 import 'package:wanandroid/blocs/bloc_pull_to_refresh.dart';
+import 'dart:convert';
+import 'package:wanandroid/values/json_strings.dart';
+import 'package:wanandroid/components/home/data/local_home_tab_data.dart';
+import 'package:wanandroid/components/home/view/home_bottom_mine_tab.dart';
+import 'package:wanandroid/components/home/view/home_bottom_system_tab.dart';
+import 'package:wanandroid/components/home/view/home_bottom_project_tab.dart';
+import 'package:wanandroid/components/home/view/home_bottom_page_tab.dart';
 
 class HomeComponent extends StatefulWidget {
   @override
@@ -14,25 +21,13 @@ class HomeComponent extends StatefulWidget {
   }
 }
 
-class TabTitle {
-  String title;
-  int id;
-
-  TabTitle(this.title, this.id);
-}
-
 class _HomeComponentState extends State<HomeComponent>
     with SingleTickerProviderStateMixin {
+  int _bottomTabIndex = 0;
+
   @override
   void initState() {
     super.initState();
-  }
-
-  Future _getData() async {
-    Dio dio = new Dio();
-    Response response = await dio
-        .get("http://qa-video.oss-cn-beijing.aliyuncs.com/mp4/xfxz0227tvc.mp4");
-    return response.data;
   }
 
   @override
@@ -43,6 +38,10 @@ class _HomeComponentState extends State<HomeComponent>
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 375, height: 667)..init(context);
+    final localTabJson = json.decode(JsonStrings.localBottomTab);
+    final localTabObjects = localTabJson.map((o) => LocalHomeTab.fromJson(o));
+    final listOfTabObjects = localTabObjects.toList();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
@@ -58,17 +57,73 @@ class _HomeComponentState extends State<HomeComponent>
         onPressed: () {},
       ),
       bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: 1,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.map), title: Text("首页")),
-            BottomNavigationBarItem(icon: Icon(Icons.tab), title: Text("体系")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.assessment), title: Text("项目")),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.assignment_ind), title: Text("我的")),
-          ]),
-      body: BlocProvider<PullToRefreshBloc>(child: HomeTabWidget(), bloc: PullToRefreshBloc()),
+        type: BottomNavigationBarType.fixed,
+        currentIndex: 1,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.map,
+                  color: _bottomTabIndex == 0 ? Colors.blue : Colors.grey),
+              title: Text(
+                listOfTabObjects[0].tab,
+                style: TextStyle(
+                    color: _bottomTabIndex == 0 ? Colors.blue : Colors.grey),
+              )),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.tab,
+                  color: _bottomTabIndex == 1 ? Colors.blue : Colors.grey),
+              title: Text(
+                listOfTabObjects[1].tab,
+                style: TextStyle(
+                    color: _bottomTabIndex == 1 ? Colors.blue : Colors.grey),
+              )),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.assessment,
+                  color: _bottomTabIndex == 2 ? Colors.blue : Colors.grey),
+              title: Text(
+                listOfTabObjects[2].tab,
+                style: TextStyle(
+                    color: _bottomTabIndex == 2 ? Colors.blue : Colors.grey),
+              )),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.assignment_ind,
+                  color: _bottomTabIndex == 3 ? Colors.blue : Colors.grey),
+              title: Text(
+                listOfTabObjects[3].tab,
+                style: TextStyle(
+                    color: _bottomTabIndex == 3 ? Colors.blue : Colors.grey),
+              )),
+        ],
+        onTap: (index) {
+          setState(() {
+            _bottomTabIndex = index;
+          });
+        },
+      ),
+//      body: BlocProvider<PullToRefreshBloc>(child: HomeTabWidget(), bloc: PullToRefreshBloc()),
+      body: Stack(
+        children: <Widget>[
+          //首页/
+          Offstage(
+            offstage: _bottomTabIndex != 0,
+            child: BottomHomePageWidget(),
+          ),
+          //体系/
+          Offstage(
+            offstage: _bottomTabIndex != 1,
+            child: BottomHomeSystemWidget(),
+          ),
+          //项目/
+          Offstage(
+            offstage: _bottomTabIndex != 2,
+            child: BottomHomeProjectWidget(),
+          ),
+          //我的/
+          Offstage(
+            offstage: _bottomTabIndex != 3,
+            child: BottomHomeMineWidget(),
+          )
+        ],
+      ),
     );
   }
 }

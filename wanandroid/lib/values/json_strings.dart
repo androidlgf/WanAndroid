@@ -31,4 +31,23 @@ abstract class JsonStrings {
         "id": 7
     }
 ]''';
+  static final String localBottomTab = '''
+  [
+    {
+        "tab": "首页",
+        "id": 1
+    },
+    {
+        "tab": "体系",
+        "id": 2
+    },
+    {
+        "tab": "项目",
+        "id": 3
+    },
+    {
+        "tab": "我的",
+        "id": 4
+    }
+]''';
 }
