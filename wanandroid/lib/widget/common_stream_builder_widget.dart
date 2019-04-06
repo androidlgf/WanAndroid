@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CommonStreamBuilder<T> extends StatefulWidget {
@@ -30,6 +32,27 @@ class CommonStreamBuilder<T> extends StatefulWidget {
 }
 
 class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
+  final Connectivity _connectivity = Connectivity();
+  StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  bool isConnectedNone = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      setState(() {
+        isConnectedNone = result == ConnectivityResult.none;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _connectivitySubscription?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -41,9 +64,14 @@ class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
             case ConnectionState.active:
               break;
             case ConnectionState.waiting:
-              return widget.waitingWidget != null
-                  ? widget.errorWidget
-                  : _buildWaitingWidget(context);
+              if (isConnectedNone) {
+                return _buildConnectedNoneWidget(context);
+              } else {
+                return widget.waitingWidget != null
+                    ? widget.errorWidget
+                    : _buildWaitingWidget(context);
+              }
+              break;
             case ConnectionState.done:
               break;
           }
@@ -65,6 +93,12 @@ class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
     Scaffold.of(context).showSnackBar(snackBar);
     return Container(
       height: 0.0,
+    );
+  }
+
+  Widget _buildConnectedNoneWidget(BuildContext context) {
+    return Center(
+      child: Text('网络不可用',style: TextStyle(color: Colors.black),),
     );
   }
 
