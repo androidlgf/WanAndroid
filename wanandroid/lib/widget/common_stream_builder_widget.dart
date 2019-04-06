@@ -37,13 +37,15 @@ class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot?.connectionState) {
             case ConnectionState.none:
-              return Text('Press button to start.');
+              break;
             case ConnectionState.active:
+              break;
             case ConnectionState.waiting:
               return widget.waitingWidget != null
                   ? widget.errorWidget
                   : _buildWaitingWidget(context);
             case ConnectionState.done:
+              break;
           }
           if (snapshot.hasError) {
             return widget.errorWidget != null
