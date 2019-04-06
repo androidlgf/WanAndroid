@@ -35,24 +35,25 @@ class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
     return StreamBuilder(
         stream: widget.stream,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          ConnectionState connectionState = snapshot?.connectionState;
-          if (ConnectionState.active == connectionState) {
-          } else if (ConnectionState.done == connectionState) {
-          } else if (ConnectionState.none == connectionState) {
-          } else if (ConnectionState.waiting == connectionState) {
-            return widget.waitingWidget != null
-                ? widget.errorWidget
-                : _buildWaitingWidget(context);
+          switch (snapshot?.connectionState) {
+            case ConnectionState.none:
+              return Text('Press button to start.');
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return widget.waitingWidget != null
+                  ? widget.errorWidget
+                  : _buildWaitingWidget(context);
+            case ConnectionState.done:
+              if (snapshot.hasError) {
+                return widget.errorWidget != null
+                    ? widget.errorWidget
+                    : _buildErrorWidget(context, snapshot.error.toString());
+              }
+              if (snapshot.hasData && widget.builder != null) {
+                return widget.builder(context, snapshot);
+              }
+              return _buildEmptyWidget(context);
           }
-          if (snapshot.hasError) {
-            return widget.errorWidget != null
-                ? widget.errorWidget
-                : _buildErrorWidget(context, snapshot.error.toString());
-          }
-          if (snapshot.hasData && widget.builder != null) {
-            return widget.builder(context, snapshot);
-          }
-          return _buildEmptyWidget(context);
         });
   }
 
