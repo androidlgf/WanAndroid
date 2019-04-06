@@ -44,16 +44,16 @@ class _CommonStreamBuilderState extends State<CommonStreamBuilder> {
                   ? widget.errorWidget
                   : _buildWaitingWidget(context);
             case ConnectionState.done:
-              if (snapshot.hasError) {
-                return widget.errorWidget != null
-                    ? widget.errorWidget
-                    : _buildErrorWidget(context, snapshot.error.toString());
-              }
-              if (snapshot.hasData && widget.builder != null) {
-                return widget.builder(context, snapshot);
-              }
-              return _buildEmptyWidget(context);
           }
+          if (snapshot.hasError) {
+            return widget.errorWidget != null
+                ? widget.errorWidget
+                : _buildErrorWidget(context, snapshot.error.toString());
+          }
+          if (snapshot.hasData && widget.builder != null) {
+            return widget.builder(context, snapshot);
+          }
+          return _buildEmptyWidget(context);
         });
   }
 
